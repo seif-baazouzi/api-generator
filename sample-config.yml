@@ -1,0 +1,7 @@
+collections:
+    todos:
+        todo:
+            type: text
+            required: true
+        done:
+            type: bool
