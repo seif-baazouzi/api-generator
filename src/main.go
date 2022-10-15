@@ -2,6 +2,7 @@ package main
 
 import (
 	"api-generator/src/config"
+	"api-generator/src/database"
 	"flag"
 	"fmt"
 	"os"
@@ -10,8 +11,9 @@ import (
 
 func main() {
 	config := parseConfigFile()
+
 	clearDistDirectory()
-	fmt.Println(config)
+	database.GenerateDB(config)
 }
 
 func parseConfigFile() config.Config {

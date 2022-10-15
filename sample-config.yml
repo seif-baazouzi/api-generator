@@ -1,7 +1,7 @@
 collections:
     todos:
         todo:
-            type: text
+            type: varchar
             required: true
         done:
             type: bool
