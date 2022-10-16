@@ -3,6 +3,7 @@ package main
 import (
 	"api-generator/src/config"
 	"api-generator/src/database"
+	"api-generator/src/routes"
 	"flag"
 	"fmt"
 	"os"
@@ -14,6 +15,7 @@ func main() {
 
 	clearDistDirectory()
 	database.GenerateDB(config)
+	routes.GenerateRoutes(config)
 }
 
 func parseConfigFile() config.Config {

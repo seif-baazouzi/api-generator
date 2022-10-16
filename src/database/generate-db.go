@@ -19,7 +19,7 @@ func GenerateDB(config config.Config) {
 	err := os.WriteFile(filePath, []byte(databaseCode), os.ModePerm)
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not create dist %s file\n", filePath)
+		fmt.Fprintf(os.Stderr, "Could not create %s file\n", filePath)
 		os.Exit(1)
 	}
 }
