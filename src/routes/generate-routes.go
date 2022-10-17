@@ -60,6 +60,7 @@ func generatorCollectionRoutes(collectionName string, collection config.Collecti
 	return strings.Join([]string{
 		``,
 		generatorGetRoute(collectionName),
+		generatorDeleteRoute(collectionName),
 		``,
 	}, "\n")
 }
