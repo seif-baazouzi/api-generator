@@ -15,7 +15,7 @@ func generatorDeleteRoute(collectionName string) string {
 			`        [ id ]`,
 			`    )`,
 			``,
-			`    res.json({ rows })`,
+			`    res.json({ message: "success" })`,
 			`})`,
 			``,
 		}, "\n"),
