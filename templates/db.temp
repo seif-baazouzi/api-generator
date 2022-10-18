@@ -1,0 +1,12 @@
+CREATE DATABASE api;
+\c api;
+
+{{ range $collectionName, $collection := .Collections }}
+CREATE TABLE {{ $collectionName }} (
+    id UUID NOT NULL,
+    {{ range $fieldName, $field := $collection }}
+    {{ $fieldName }} {{ $field.Type }} {{ if ( $field.Required ) }} NOT NULL {{ else }} NULL {{ end }},
+    {{ end }}
+    PRIMARY KEY (id)
+);
+{{ end }}

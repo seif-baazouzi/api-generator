@@ -2,51 +2,24 @@ package database
 
 import (
 	"api-generator/src/config"
+	"api-generator/src/utils"
 	"fmt"
+	"html/template"
 	"os"
 	"path/filepath"
 )
 
 func GenerateDB(config config.Config) {
-	databaseCode := "CREATE DATABASE api;\n"
-	databaseCode += "\\c api;\n"
-
-	for collectionName, collection := range config.Collections {
-		databaseCode += createCollection(collectionName, collection)
-	}
-
-	filePath := filepath.Join(".", "dist", "db.sql")
-	err := os.WriteFile(filePath, []byte(databaseCode), os.ModePerm)
+	templatePath := filepath.Join(".", "templates", "db.temp")
+	template, err := template.ParseFiles(templatePath)
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not create %s file\n", filePath)
+		fmt.Fprintf(os.Stderr, "Could not parse template db.temp\n")
 		os.Exit(1)
 	}
-}
 
-func createCollection(collectionName string, collection config.Collection) string {
-	collectionCode := ""
+	databaseSQL, err := utils.TemplateToString(template, config)
 
-	collectionCode += fmt.Sprintf("CREATE TABLE %s (\n", collectionName)
-	collectionCode += "    id UUID NOT NULL,\n"
-
-	for fieldName, field := range collection {
-		collectionCode += createField(fieldName, field)
-	}
-
-	collectionCode += "    PRIMARY KEY (id)\n"
-	collectionCode += ");\n"
-
-	return collectionCode
-}
-
-func createField(fieldName string, field config.Field) string {
-	var isNull string
-	if field.Required {
-		isNull = "NOT NULL"
-	} else {
-		isNull = "NULL"
-	}
-
-	return fmt.Sprintf("    %s %s %s,\n", fieldName, field.Type, isNull)
+	filePath := filepath.Join(".", "dist", "db.sql")
+	err = os.WriteFile(filePath, []byte(databaseSQL), os.ModePerm)
 }
