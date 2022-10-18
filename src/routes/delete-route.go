@@ -1,24 +1,23 @@
 package routes
 
 import (
+	"api-generator/src/utils"
 	"fmt"
-	"strings"
+	"html/template"
+	"os"
+	"path/filepath"
 )
 
 func generatorDeleteRoute(collectionName string) string {
-	return fmt.Sprintf(
-		strings.Join([]string{
-			`app.delete("/%s/:id", (req, res) => {`,
-			`    const id = req.params.id`,
-			`    await db.query(`,
-			`        "DELETE FROM %s WHERE id = $1",`,
-			`        [ id ]`,
-			`    )`,
-			``,
-			`    res.json({ message: "success" })`,
-			`})`,
-			``,
-		}, "\n"),
-		collectionName, collectionName,
-	)
+	templatePath := filepath.Join(".", "templates", "delete-route.temp")
+	template, err := template.ParseFiles(templatePath)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not parse template %s\n", templatePath)
+		os.Exit(1)
+	}
+
+	code, err := utils.TemplateToString(template, collectionName)
+	return code
+
 }
