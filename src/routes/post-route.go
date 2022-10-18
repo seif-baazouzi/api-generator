@@ -4,26 +4,33 @@ import (
 	"api-generator/src/config"
 	"api-generator/src/utils"
 	"fmt"
+	"html/template"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
-func generatorPostRoute(collectionName string, collection config.Collection) string {
-	columns := strings.Join(utils.GetCollectionFields(collection), ", ")
-	columnsPlaceHolders := strings.Join(utils.GenerateSqlPlaceholders(len(collection)), ", ")
+type postRouteDataStruct struct {
+	CollectionName      string
+	Columns             string
+	ColumnsPlaceHolders string
+}
 
-	return fmt.Sprintf(
-		strings.Join([]string{
-			`app.post("/%s", (req, res) => {`,
-			`    const { %s } = req.body`,
-			`    const { rows } = await db.query(`,
-			`        "INSERT INTO %s (%s) VALUES (%s) RETURNING id",`,
-			`        [ %s ]`,
-			`    )`,
-			``,
-			`    res.json({ message: "success", id: rows[0].id })`,
-			`})`,
-			``,
-		}, "\n"),
-		collectionName, columns, collectionName, columns, columnsPlaceHolders, columns,
-	)
+func generatorPostRoute(collectionName string, collection config.Collection) string {
+	data := postRouteDataStruct{
+		CollectionName:      collectionName,
+		Columns:             strings.Join(utils.GetCollectionFields(collection), ", "),
+		ColumnsPlaceHolders: strings.Join(utils.GenerateSqlPlaceholders(len(collection)), ", "),
+	}
+
+	templatePath := filepath.Join(".", "templates", "post-route.temp")
+	template, err := template.ParseFiles(templatePath)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not parse template %s\n", templatePath)
+		os.Exit(1)
+	}
+
+	code, err := utils.TemplateToString(template, data)
+	return code
 }

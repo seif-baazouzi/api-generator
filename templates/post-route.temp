@@ -1,0 +1,9 @@
+app.post("/{{ .CollectionName }}", (req, res) => {
+    const { {{ .Columns }} } = req.body
+    const { rows } = await db.query(
+        "INSERT INTO {{ .CollectionName }} ({{ .Columns }}) VALUES ({{ .ColumnsPlaceHolders }}) RETURNING id",
+        [ {{ .Columns }} ]
+    )
+
+    res.json({ message: "success", id: rows[0].id })
+})
