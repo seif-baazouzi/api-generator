@@ -1,0 +1,6 @@
+app.get("/{{ . }}", (req, res) => {
+    const { rows } = await db.query(
+        "SELECT * FROM {{ . }}",
+    )
+    res.json({ rows })
+})

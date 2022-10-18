@@ -1,22 +1,22 @@
 package routes
 
 import (
+	"api-generator/src/utils"
 	"fmt"
-	"strings"
+	"html/template"
+	"os"
+	"path/filepath"
 )
 
 func generatorGetRoute(collectionName string) string {
-	return fmt.Sprintf(
-		strings.Join([]string{
-			`app.get("/%s", (req, res) => {`,
-			`    const { rows } = await db.query(`,
-			`        "SELECT * FROM %s",`,
-			`    )`,
-			``,
-			`    res.json({ rows })`,
-			`})`,
-			``,
-		}, "\n"),
-		collectionName, collectionName,
-	)
+	templatePath := filepath.Join(".", "templates", "get-route.temp")
+	template, err := template.ParseFiles(templatePath)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not parse template %s\n", templatePath)
+		os.Exit(1)
+	}
+
+	code, err := utils.TemplateToString(template, collectionName)
+	return code
 }

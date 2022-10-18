@@ -14,7 +14,7 @@ func GenerateDB(config config.Config) {
 	template, err := template.ParseFiles(templatePath)
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not parse template db.temp\n")
+		fmt.Fprintf(os.Stderr, "Could not parse template %s\n", templatePath)
 		os.Exit(1)
 	}
 
