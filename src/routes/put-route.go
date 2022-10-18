@@ -4,28 +4,37 @@ import (
 	"api-generator/src/config"
 	"api-generator/src/utils"
 	"fmt"
+	"html/template"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
-func generatorPutRoute(collectionName string, collection config.Collection) string {
-	columns := strings.Join(utils.GetCollectionFields(collection), ", ")
-	columnsPlaceHolders := strings.Join(utils.GenerateSqlPlaceholders(len(collection)), ", ")
-	idPlaceholder := len(collection) + 1
+type putRouteDataStruct struct {
+	CollectionName string
+	Columns        string
+	ColumnsSet     string
+	IdPlaceholder  int
+}
 
-	return fmt.Sprintf(
-		strings.Join([]string{
-			`app.put("/%s/:id", (req, res) => {`,
-			`    const id = req.params.id`,
-			`    const { %s } = req.body`,
-			`    await db.query(`,
-			`        "UPDATE %s SET (%s) = %s WHERE id = $%d",`,
-			`        [ %s, id ]`,
-			`    )`,
-			``,
-			`    res.json({ message: "success" })`,
-			`})`,
-			``,
-		}, "\n"),
-		collectionName, columns, collectionName, columns, columnsPlaceHolders, idPlaceholder, columns,
-	)
+func generatorPutRoute(collectionName string, collection config.Collection) string {
+	columns := utils.GetCollectionFields(collection)
+
+	data := putRouteDataStruct{
+		CollectionName: collectionName,
+		Columns:        strings.Join(columns, ", "),
+		ColumnsSet:     utils.GenerateColumnsSet(columns),
+		IdPlaceholder:  len(collection) + 1,
+	}
+
+	templatePath := filepath.Join(".", "templates", "put-route.temp")
+	template, err := template.ParseFiles(templatePath)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not parse template %s\n", templatePath)
+		os.Exit(1)
+	}
+
+	code, err := utils.TemplateToString(template, data)
+	return code
 }
