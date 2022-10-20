@@ -1,6 +1,7 @@
 package config
 
 type Config struct {
+	ProjectName string
 	Collections map[string]Collection
 }
 
