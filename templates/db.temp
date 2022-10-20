@@ -1,5 +1,5 @@
-CREATE DATABASE api;
-\c api;
+CREATE DATABASE {{ .ProjectName }};
+\c {{ .ProjectName }};
 
 {{ range $collectionName, $collection := .Collections }}
 CREATE TABLE {{ $collectionName }} (

@@ -1,7 +1,7 @@
 package config
 
 type Config struct {
-	ProjectName string
+	ProjectName string `yaml:"projectName"`
 	Collections map[string]Collection
 }
 

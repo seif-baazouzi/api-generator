@@ -17,7 +17,7 @@ func GeneratePackageJson(projectName string) {
 		os.Exit(1)
 	}
 
-	databaseSQL, err := utils.TemplateToString(template, nil)
+	databaseSQL, err := utils.TemplateToString(template, projectName)
 
 	filePath := filepath.Join(".", "dist", "package.json")
 	err = os.WriteFile(filePath, []byte(databaseSQL), os.ModePerm)
