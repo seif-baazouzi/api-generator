@@ -3,10 +3,7 @@ package routes
 import (
 	"api-generator/src/config"
 	"api-generator/src/utils"
-	"fmt"
-	"html/template"
 	t "html/template"
-	"os"
 	"path/filepath"
 	"strings"
 )
@@ -19,14 +16,7 @@ func GenerateRoutes(config config.Config) {
 	}
 
 	templatePath := filepath.Join(".", "templates", "main.temp")
-	template, err := template.ParseFiles(templatePath)
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not parse template %s\n", templatePath)
-		os.Exit(1)
-	}
-
-	code, err := utils.TemplateToString(template, t.HTML(routesCode))
+	code := utils.ParseTemplate(templatePath, t.HTML(routesCode))
 
 	filePath := filepath.Join(".", "dist", "server.js")
 	utils.CreateFile(filePath, code)

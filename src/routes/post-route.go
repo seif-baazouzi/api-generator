@@ -3,9 +3,6 @@ package routes
 import (
 	"api-generator/src/config"
 	"api-generator/src/utils"
-	"fmt"
-	"html/template"
-	"os"
 	"path/filepath"
 	"strings"
 )
@@ -24,13 +21,7 @@ func generatorPostRoute(collectionName string, collection config.Collection) str
 	}
 
 	templatePath := filepath.Join(".", "templates", "post-route.temp")
-	template, err := template.ParseFiles(templatePath)
+	code := utils.ParseTemplate(templatePath, data)
 
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not parse template %s\n", templatePath)
-		os.Exit(1)
-	}
-
-	code, err := utils.TemplateToString(template, data)
 	return code
 }
