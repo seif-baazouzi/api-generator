@@ -21,5 +21,5 @@ func GenerateDB(config config.Config) {
 	databaseSQL, err := utils.TemplateToString(template, config)
 
 	filePath := filepath.Join(".", "dist", "db.sql")
-	err = os.WriteFile(filePath, []byte(databaseSQL), os.ModePerm)
+	utils.CreateFile(filePath, databaseSQL)
 }

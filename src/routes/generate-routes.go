@@ -29,12 +29,7 @@ func GenerateRoutes(config config.Config) {
 	code, err := utils.TemplateToString(template, t.HTML(routesCode))
 
 	filePath := filepath.Join(".", "dist", "server.js")
-	err = os.WriteFile(filePath, []byte(code), os.ModePerm)
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not create %s file\n", filePath)
-		os.Exit(1)
-	}
+	utils.CreateFile(filePath, code)
 }
 
 func generatorCollectionRoutes(collectionName string, collection config.Collection) string {

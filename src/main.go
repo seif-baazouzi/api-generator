@@ -5,16 +5,16 @@ import (
 	"api-generator/src/database"
 	"api-generator/src/others"
 	"api-generator/src/routes"
+	"api-generator/src/utils"
 	"flag"
 	"fmt"
 	"os"
-	"path/filepath"
 )
 
 func main() {
 	config := parseConfigFile()
 
-	clearDistDirectory()
+	utils.ClearDirectory("dist")
 	database.GenerateDB(config)
 	routes.GenerateRoutes(config)
 	others.GeneratePackageJson(config.ProjectName)
@@ -37,15 +37,4 @@ func parseConfigFile() config.Config {
 	}
 
 	return config
-}
-
-func clearDistDirectory() {
-	distPath := filepath.Join(".", "dist")
-	os.RemoveAll(distPath)
-	err := os.MkdirAll(distPath, os.ModePerm)
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Could not create dist directory\n")
-		os.Exit(1)
-	}
 }
