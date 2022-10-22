@@ -18,7 +18,10 @@ func GenerateRoutes(config config.Config) {
 	templatePath := filepath.Join(".", "templates", "main.temp")
 	code := utils.ParseTemplate(templatePath, t.HTML(routesCode))
 
-	filePath := filepath.Join(".", "dist", "server.js")
+	dirPath := filepath.Join(".", "dist", "src")
+	utils.CreateDirectory(dirPath)
+
+	filePath := filepath.Join(".", "dist", "src", "server.js")
 	utils.CreateFile(filePath, code)
 }
 

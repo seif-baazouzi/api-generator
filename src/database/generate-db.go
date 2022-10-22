@@ -10,6 +10,9 @@ func GenerateDB(config config.Config) {
 	templatePath := filepath.Join(".", "templates", "db.temp")
 	databaseSQL := utils.ParseTemplate(templatePath, config)
 
-	filePath := filepath.Join(".", "dist", "db.sql")
+	dirPath := filepath.Join(".", "dist", "database")
+	utils.CreateDirectory(dirPath)
+
+	filePath := filepath.Join(".", "dist", "database", "db.sql")
 	utils.CreateFile(filePath, databaseSQL)
 }
