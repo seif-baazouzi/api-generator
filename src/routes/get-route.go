@@ -6,7 +6,7 @@ import (
 )
 
 func generatorGetRoute(collectionName string) string {
-	templatePath := filepath.Join(".", "templates", "get-route.temp")
+	templatePath := filepath.Join(".", "templates", "src", "routes", "get-route.temp")
 	code := utils.ParseTemplate(templatePath, collectionName)
 
 	return code

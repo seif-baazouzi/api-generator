@@ -20,7 +20,7 @@ func generatorPostRoute(collectionName string, collection config.Collection) str
 		ColumnsPlaceHolders: strings.Join(utils.GenerateSqlPlaceholders(len(collection)), ", "),
 	}
 
-	templatePath := filepath.Join(".", "templates", "post-route.temp")
+	templatePath := filepath.Join(".", "templates", "src", "routes", "post-route.temp")
 	code := utils.ParseTemplate(templatePath, data)
 
 	return code

@@ -24,7 +24,7 @@ func generatorPutRoute(collectionName string, collection config.Collection) stri
 		IdPlaceholder:  len(collection) + 1,
 	}
 
-	templatePath := filepath.Join(".", "templates", "put-route.temp")
+	templatePath := filepath.Join(".", "templates", "src", "routes", "put-route.temp")
 	code := utils.ParseTemplate(templatePath, data)
 
 	return code

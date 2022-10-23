@@ -7,7 +7,7 @@ import (
 )
 
 func GenerateDB(config config.Config) {
-	templatePath := filepath.Join(".", "templates", "db.temp")
+	templatePath := filepath.Join(".", "templates", "database", "db.temp")
 	databaseSQL := utils.ParseTemplate(templatePath, config)
 
 	dirPath := filepath.Join(".", "dist", "database")

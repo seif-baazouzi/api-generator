@@ -15,7 +15,7 @@ func GenerateRoutes(config config.Config) {
 		routesCode += generatorCollectionRoutes(collectionName, collection)
 	}
 
-	templatePath := filepath.Join(".", "templates", "main.temp")
+	templatePath := filepath.Join(".", "templates", "src", "main.temp")
 	code := utils.ParseTemplate(templatePath, t.HTML(routesCode))
 
 	dirPath := filepath.Join(".", "dist", "src")
