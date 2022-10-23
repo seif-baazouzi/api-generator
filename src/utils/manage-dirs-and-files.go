@@ -7,7 +7,11 @@ import (
 	"path/filepath"
 )
 
-func CreateDirectory(dirName string) string {
+func CreateDirectory(dirName string, doNotLog ...bool) string {
+	if len(doNotLog) == 0 || !doNotLog[0] {
+		fmt.Printf("[+] Create Directory %s\n", dirName)
+	}
+
 	path := filepath.Join(".", dirName)
 	err := os.MkdirAll(path, os.ModePerm)
 
@@ -19,7 +23,11 @@ func CreateDirectory(dirName string) string {
 	return path
 }
 
-func RemoveDirectory(dirName string) string {
+func RemoveDirectory(dirName string, doNotLog ...bool) string {
+	if len(doNotLog) == 0 || !doNotLog[0] {
+		fmt.Printf("[+] Remove Directory %s\n", dirName)
+	}
+
 	path := filepath.Join(".", dirName)
 	err := os.RemoveAll(path)
 
@@ -31,14 +39,22 @@ func RemoveDirectory(dirName string) string {
 	return path
 }
 
-func ClearDirectory(dirName string) string {
+func ClearDirectory(dirName string, doNotLog ...bool) string {
+	if len(doNotLog) == 0 || !doNotLog[0] {
+		fmt.Printf("[+] Clear Directory %s\n", dirName)
+	}
+
 	RemoveDirectory(dirName)
 	path := CreateDirectory(dirName)
 
 	return path
 }
 
-func CreateFile(filePath string, content string) {
+func CreateFile(filePath string, content string, doNotLog ...bool) {
+	if len(doNotLog) == 0 || !doNotLog[0] {
+		fmt.Printf("[+] Create File %s\n", filePath)
+	}
+
 	err := os.WriteFile(filePath, []byte(content), os.ModePerm)
 
 	if err != nil {
@@ -47,7 +63,11 @@ func CreateFile(filePath string, content string) {
 	}
 }
 
-func CopyFile(src string, dst string) {
+func CopyFile(src string, dst string, doNotLog ...bool) {
+	if len(doNotLog) == 0 || !doNotLog[0] {
+		fmt.Printf("[+] Copy File %s to %s\n", src, dst)
+	}
+
 	in, err := os.Open(src)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Could not read file %s\n", src)

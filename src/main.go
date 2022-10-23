@@ -19,6 +19,8 @@ func main() {
 	routes.GenerateRoutes(config)
 	others.GeneratePackageJson(config.ProjectName)
 	others.GenerateDockerFiles(config.ProjectName)
+
+	fmt.Println("[+] Done!")
 }
 
 func parseConfigFile() config.Config {
