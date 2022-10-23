@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 )
@@ -42,6 +43,39 @@ func CreateFile(filePath string, content string) {
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Could not create `%s` file\n", filePath)
+		os.Exit(1)
+	}
+}
+
+func CopyFile(src string, dst string) {
+	in, err := os.Open(src)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not read file %s\n", src)
+		os.Exit(1)
+	}
+	defer in.Close()
+
+	out, err := os.Create(dst)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not create file %s\n", dst)
+		os.Exit(1)
+	}
+	defer func() {
+		err := out.Close()
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Could not close file %s\n", dst)
+			os.Exit(1)
+		}
+	}()
+
+	if _, err = io.Copy(out, in); err != nil {
+		fmt.Fprintf(os.Stderr, "Could not copy %s into %s\n", src, dst)
+		os.Exit(1)
+	}
+
+	err = out.Sync()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Could not write file %s\n", dst)
 		os.Exit(1)
 	}
 }
