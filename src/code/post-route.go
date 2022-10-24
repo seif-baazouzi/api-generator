@@ -11,6 +11,7 @@ type postRouteDataStruct struct {
 	CollectionName      string
 	Columns             string
 	ColumnsPlaceHolders string
+	IdPlaceholder       int
 }
 
 func generatorPostRoute(collectionName string, collection config.Collection) {
@@ -18,6 +19,7 @@ func generatorPostRoute(collectionName string, collection config.Collection) {
 		CollectionName:      collectionName,
 		Columns:             strings.Join(utils.GetCollectionFields(collection), ", "),
 		ColumnsPlaceHolders: strings.Join(utils.GenerateSqlPlaceholders(len(collection)), ", "),
+		IdPlaceholder:       len(collection) + 1,
 	}
 
 	templatePath := filepath.Join(".", "templates", "src", "routes", "post-route.temp")
