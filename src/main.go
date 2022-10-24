@@ -1,10 +1,10 @@
 package main
 
 import (
+	"api-generator/src/code"
 	"api-generator/src/config"
 	"api-generator/src/database"
 	"api-generator/src/others"
-	"api-generator/src/routes"
 	"api-generator/src/utils"
 	"flag"
 	"fmt"
@@ -16,7 +16,7 @@ func main() {
 
 	utils.ClearDirectory("dist")
 	database.GenerateDB(config)
-	routes.GenerateRoutes(config)
+	code.GenerateCode(config)
 	others.GeneratePackageJson(config.ProjectName)
 	others.GenerateDockerFiles(config.ProjectName)
 

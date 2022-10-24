@@ -1,4 +1,4 @@
-package routes
+package code
 
 import (
 	"api-generator/src/utils"

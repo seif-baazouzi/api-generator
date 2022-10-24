@@ -1,4 +1,4 @@
-package routes
+package code
 
 import (
 	"api-generator/src/config"
@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func GenerateRoutes(config config.Config) {
+func generateMain(config config.Config) {
 	routesCode := strings.Join([]string{}, "\n")
 
 	for collectionName, collection := range config.Collections {
@@ -17,9 +17,6 @@ func GenerateRoutes(config config.Config) {
 
 	templatePath := filepath.Join(".", "templates", "src", "main.temp")
 	code := utils.ParseTemplate(templatePath, t.HTML(routesCode))
-
-	dirPath := filepath.Join(".", "dist", "src")
-	utils.CreateDirectory(dirPath)
 
 	filePath := filepath.Join(".", "dist", "src", "server.js")
 	utils.CreateFile(filePath, code)

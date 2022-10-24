@@ -40,10 +40,6 @@ func RemoveDirectory(dirName string, doNotLog ...bool) string {
 }
 
 func ClearDirectory(dirName string, doNotLog ...bool) string {
-	if len(doNotLog) == 0 || !doNotLog[0] {
-		fmt.Printf("[+] Clear Directory %s\n", dirName)
-	}
-
 	RemoveDirectory(dirName)
 	path := CreateDirectory(dirName)
 
