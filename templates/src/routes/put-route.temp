@@ -1,4 +1,9 @@
-app.put("/{{ .CollectionName }}/:id", (req, res) => {
+const express = require("express")
+const router = express.Router()
+
+const db = require("../db")
+
+router.put("/{{ .CollectionName }}/:id", (req, res) => {
     const id = req.params.id
     const { {{ .Columns }} } = req.body
     const { rows } = await db.query(
@@ -8,3 +13,5 @@ app.put("/{{ .CollectionName }}/:id", (req, res) => {
 
     res.json({ message: "success", id: rows[0].id })
 })
+
+module.exports = router

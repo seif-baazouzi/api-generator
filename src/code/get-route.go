@@ -5,9 +5,10 @@ import (
 	"path/filepath"
 )
 
-func generatorGetRoute(collectionName string) string {
+func generatorGetRoute(collectionName string) {
 	templatePath := filepath.Join(".", "templates", "src", "routes", "get-route.temp")
 	code := utils.ParseTemplate(templatePath, collectionName)
 
-	return code
+	filePath := filepath.Join(".", "dist", "src", collectionName, "get.js")
+	utils.CreateFile(filePath, code)
 }

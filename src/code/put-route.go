@@ -14,7 +14,7 @@ type putRouteDataStruct struct {
 	IdPlaceholder  int
 }
 
-func generatorPutRoute(collectionName string, collection config.Collection) string {
+func generatorPutRoute(collectionName string, collection config.Collection) {
 	columns := utils.GetCollectionFields(collection)
 
 	data := putRouteDataStruct{
@@ -27,5 +27,6 @@ func generatorPutRoute(collectionName string, collection config.Collection) stri
 	templatePath := filepath.Join(".", "templates", "src", "routes", "put-route.temp")
 	code := utils.ParseTemplate(templatePath, data)
 
-	return code
+	filePath := filepath.Join(".", "dist", "src", collectionName, "put.js")
+	utils.CreateFile(filePath, code)
 }

@@ -12,4 +12,14 @@ func GenerateCode(config config.Config) {
 
 	generateDB()
 	generateMain(config)
+
+	for collectionName, collection := range config.Collections {
+		dirPath := filepath.Join(".", "dist", "src", collectionName)
+		utils.CreateDirectory(dirPath)
+
+		generatorGetRoute(collectionName)
+		generatorPostRoute(collectionName, collection)
+		generatorPutRoute(collectionName, collection)
+		generatorDeleteRoute(collectionName)
+	}
 }
