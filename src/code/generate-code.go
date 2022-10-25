@@ -13,6 +13,7 @@ func GenerateCode(config config.Config) {
 	generateDB()
 	generateMain(config)
 	generateValidation(config)
+	copyUtils()
 
 	for collectionName, collection := range config.Collections {
 		dirPath := filepath.Join(".", "dist", "src", collectionName)

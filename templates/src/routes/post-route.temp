@@ -4,9 +4,10 @@ const router = express.Router()
 const { v4: uuidv4 } = require("uuid");
 
 const db = require("../db")
+const tryCatch = require("../utils/try-catch")
 const validation = require("../validation/{{ .CollectionName }}")
 
-router.post("/", async (req, res) => {
+router.post("/", tryCatch(async (req, res) => {
     const { isValid, errors } = validation(req.body)
     if(!isValid) return res.json(errors)
 
@@ -19,6 +20,6 @@ router.post("/", async (req, res) => {
     )
 
     res.json({ message: "success", id })
-})
+}))
 
 module.exports = router

@@ -1,0 +1,9 @@
+module.exports = function(callback) {
+    return (req, res) => {
+        try {
+            callback(req, res)
+        } catch {
+            res.status(500).json({ message: "server-error" })
+        }
+    }
+}
