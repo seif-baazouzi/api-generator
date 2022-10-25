@@ -4,11 +4,14 @@ const router = express.Router()
 const { v4: uuidv4 } = require("uuid");
 
 const db = require("../db")
+const validation = require("../validation/{{ .CollectionName }}")
 
 router.post("/", async (req, res) => {
+    const { isValid, errors } = validation(req.body)
+    if(!isValid) return res.json(errors)
+
     const id = uuidv4()
     const { {{ .Columns }} } = req.body
-    console.log(req.body)
 
     await db.query(
         "INSERT INTO {{ .CollectionName }} ({{ .Columns }}, id) VALUES ({{ .ColumnsPlaceHolders }}, ${{ .IdPlaceholder }})",
