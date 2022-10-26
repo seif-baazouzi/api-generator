@@ -20,6 +20,7 @@ func GenerateCode(config config.Config) {
 		utils.CreateDirectory(dirPath)
 
 		generatorGetRoute(collectionName)
+		generatorGetSingleRoute(collectionName)
 		generatorPostRoute(collectionName, collection)
 		generatorPutRoute(collectionName, collection)
 		generatorDeleteRoute(collectionName)

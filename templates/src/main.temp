@@ -7,6 +7,7 @@ app.use(require("body-parser").json())
 
 {{ range $collectionName, $collection := .Collections }}
 app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/get"))
+app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/get-single"))
 app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/post"))
 app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/put"))
 app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/delete"))
