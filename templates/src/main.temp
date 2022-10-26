@@ -6,11 +6,11 @@ app.use(cors())
 app.use(require("body-parser").json())
 
 {{ range $collectionName, $collection := .Collections }}
-app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/get"))
-app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/get-single"))
-app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/post"))
-app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/put"))
-app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/delete"))
+{{ if($collection.Routes.Get)       }}app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/get"))        {{ end }}
+{{ if($collection.Routes.GetSingle) }}app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/get-single")) {{ end }}
+{{ if($collection.Routes.Post)      }}app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/post"))       {{ end }}
+{{ if($collection.Routes.Put)       }}app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/put"))        {{ end }}
+{{ if($collection.Routes.Delete)    }}app.use("/api/v1/{{ $collectionName }}", require("./{{ $collectionName }}/delete"))     {{ end }}
 {{ end }}
 
 const PORT = process.env.PORT || 3000

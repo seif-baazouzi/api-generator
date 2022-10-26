@@ -2,8 +2,16 @@ projectName: todos
 
 collections:
     todos:
-        todo:
-            type: varchar
-            required: true
-        done:
-            type: bool
+        fields:
+            todo:
+                type: varchar
+                required: true
+            done:
+                type: bool
+
+        routes:
+            get: true
+            get-single: false
+            post: true
+            put: true
+            delete: false

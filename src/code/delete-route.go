@@ -5,7 +5,11 @@ import (
 	"path/filepath"
 )
 
-func generatorDeleteRoute(collectionName string) {
+func generatorDeleteRoute(collectionName string, generate bool) {
+	if !generate {
+		return
+	}
+
 	templatePath := filepath.Join(".", "templates", "src", "routes", "delete-route.temp")
 	code := utils.ParseTemplate(templatePath, collectionName)
 

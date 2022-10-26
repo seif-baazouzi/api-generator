@@ -19,10 +19,10 @@ func GenerateCode(config config.Config) {
 		dirPath := filepath.Join(".", "dist", "src", collectionName)
 		utils.CreateDirectory(dirPath)
 
-		generatorGetRoute(collectionName)
-		generatorGetSingleRoute(collectionName)
-		generatorPostRoute(collectionName, collection)
-		generatorPutRoute(collectionName, collection)
-		generatorDeleteRoute(collectionName)
+		generatorGetRoute(collectionName, collection.Routes.Get)
+		generatorGetSingleRoute(collectionName, collection.Routes.GetSingle)
+		generatorPostRoute(collectionName, collection.Fields, collection.Routes.Post)
+		generatorPutRoute(collectionName, collection.Fields, collection.Routes.Put)
+		generatorDeleteRoute(collectionName, collection.Routes.Delete)
 	}
 }

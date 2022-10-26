@@ -26,7 +26,7 @@ func GenerateSqlPlaceholders(length int) []string {
 	return list
 }
 
-func GetCollectionFields(myMap config.Collection) []string {
+func GetCollectionFields(myMap config.Fields) []string {
 	keys := make([]string, len(myMap))
 
 	i := 0

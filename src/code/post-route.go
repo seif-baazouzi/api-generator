@@ -14,12 +14,16 @@ type postRouteDataStruct struct {
 	IdPlaceholder       int
 }
 
-func generatorPostRoute(collectionName string, collection config.Collection) {
+func generatorPostRoute(collectionName string, fields config.Fields, generate bool) {
+	if !generate {
+		return
+	}
+
 	data := postRouteDataStruct{
 		CollectionName:      collectionName,
-		Columns:             strings.Join(utils.GetCollectionFields(collection), ", "),
-		ColumnsPlaceHolders: strings.Join(utils.GenerateSqlPlaceholders(len(collection)), ", "),
-		IdPlaceholder:       len(collection) + 1,
+		Columns:             strings.Join(utils.GetCollectionFields(fields), ", "),
+		ColumnsPlaceHolders: strings.Join(utils.GenerateSqlPlaceholders(len(fields)), ", "),
+		IdPlaceholder:       len(fields) + 1,
 	}
 
 	templatePath := filepath.Join(".", "templates", "src", "routes", "post-route.temp")

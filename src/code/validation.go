@@ -9,7 +9,7 @@ import (
 
 type validationDataStruct struct {
 	Params string
-	Fields config.Collection
+	Fields config.Fields
 }
 
 func generateValidation(config config.Config) {
@@ -18,8 +18,8 @@ func generateValidation(config config.Config) {
 
 	for collectionName, collection := range config.Collections {
 		data := validationDataStruct{
-			Params: strings.Join(utils.GetCollectionFields(collection), ", "),
-			Fields: collection,
+			Params: strings.Join(utils.GetCollectionFields(collection.Fields), ", "),
+			Fields: collection.Fields,
 		}
 
 		templatePath := filepath.Join(".", "templates", "src", "validation.temp")

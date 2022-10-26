@@ -5,7 +5,11 @@ import (
 	"path/filepath"
 )
 
-func generatorGetSingleRoute(collectionName string) {
+func generatorGetSingleRoute(collectionName string, generate bool) {
+	if !generate {
+		return
+	}
+
 	templatePath := filepath.Join(".", "templates", "src", "routes", "get-single-route.temp")
 	code := utils.ParseTemplate(templatePath, collectionName)
 
